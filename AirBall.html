@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>氣動球</title>
+	<style type="text/css">
+canvas{background: #eee; display: block;margin: 0 auto; margin-top: 120px;}
+#btn {
+  background: #a3b4bf;
+  background-image: -webkit-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -moz-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -ms-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -o-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: linear-gradient(to bottom, #a3b4bf, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: #f7eaf7;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-top: 50px;
+ /* margin-left: 500px;*/
+}
+
+#btn1 {
+  background: #a3b4bf;
+  background-image: -webkit-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -moz-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -ms-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -o-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: linear-gradient(to bottom, #a3b4bf, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: #f7eaf7;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+#btn2 {
+  background: #a3b4bf;
+  background-image: -webkit-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -moz-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -ms-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: -o-linear-gradient(top, #a3b4bf, #2980b9);
+  background-image: linear-gradient(to bottom, #a3b4bf, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: #f7eaf7;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+#btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+#btn1:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+#btn2:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+#winner{
+	display: none;
+}
+
+.msg{
+	position: fixed;
+	top: -400px;
+	left: 30%;
+	width: 450px;
+	background-color: #fff;
+	color: #7F7F7F;
+	padding: 20px;
+	border: 2px solid #ccc;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-khtml-border-radius: 20px;
+	-moz-box-shadow: 0 1px 5px #333;
+	-webkit-box-shadow: 0 1px 5px #333;
+	z-index: 101;
+	-webkit-transition: all 3s ease-out;
+	-ms-transition: all 3s ease-out;
+	transition: all 3s ease-out;
+}
+
+#title{
+	background-color: #CCEEFF;
+	border-bottom: 1px dashed #7F7F7F;
+	margin: -20px -20px 0px -20px;
+	padding: 10px;
+	-moz-border-radius: 20px 20px 0px 0px;
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-khtml-border-top-left-radius: 20px;
+	-khtml-border-top-right-radius: 20px;
+}
+
+</style>
+
+</head>
+<body background="img/background.jpg" onload="load()">
+	<div class = "msg"  id = "msg" onclick="exitMsg()">
+	<h1 id= "title">遊戲說明</h1>
+	<p>遊戲採三回合制</p>	
+	<p>左方玩家使用"W"與"X"鍵，右方玩家使用"8"與"2"控制球版進行上下移動
+	<p>每次球碰觸球版速度將會加乘，球進入後方長條區域得1分，並重新發球</p>
+	<h4>點擊滑鼠左鍵即可關閉說明視窗</h4>
+	</div>
+	<!-- <h1 id = "topTitle" align="center">The Air Ball Game</h1> -->
+	<canvas id = "myCanvas" width="700" height = "400"></canvas>
+	<center>
+	<button id= "btn" type="button" onclick="startGame()">開始遊戲</button> 
+	<button id= "btn1" type="button" onclick="stopGame()">結束遊戲</button> 
+	<button id= "btn2" type="button" onclick="msg()">遊戲說明</button>
+	
+	<table>
+		<tr>
+			<td width="350px" align = "center"><h2 id = "scoreA">Player1得分：</h2></td>
+			<td width="350px" align = "center"><h2 id = "scoreB">Player2得分：</h2></td>
+		</tr>
+		<tr>
+			<td colspan="2" align = "center"><h2 id= "winner">贏家：</h2></td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		var canvas = document.getElementById("myCanvas");
+		var ctx = canvas.getContext("2d");
+		var ballX = canvas.width/2;
+		var ballY = canvas.height/2;
+		var ballRadius = 10;
+		var dx = -2;
+		var dy = 2;
+
+		var paddleWidth = 10;
+		var paddleHeight = 75;
+		var paddleAY = (canvas.height-paddleHeight)/2;
+		var paddleBY = (canvas.height-paddleHeight)/2;
+		var paddleAX = 30;
+		var paddleBX = canvas.width-paddleAX;
+
+		var scoreBrickWidth = 5;
+		var scroeBrickHeight = 200;
+
+		var upPressA = false;
+		var downPressA = false;
+		var upPressB = false;
+		var downPressB = false;
+
+		var score1 = 0;
+		var score2 = 0;
+		var collisionNum = 0;
+
+		var isStartGame = false;
+		var isLoadOk = false;
+		var isMsg = true;
+		var stop  = false;
+		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keyup", keyUpHandler, false);
+
+		function keyDownHandler(e){
+			if(e.keyCode == 104){
+				upPressA = true;
+			}
+			else if(e.keyCode == 98){
+				downPressA = true;
+			}
+			else if (e.keyCode == 87){
+				upPressB = true;
+			}
+			else if (e.keyCode == 88){
+				downPressB = true;
+			}
+		}
+
+		function keyUpHandler(e){
+			if(e.keyCode == 104){
+				upPressA = false;
+			}
+			else if(e.keyCode == 98){
+				downPressA = false;
+			}
+			else if (e.keyCode == 87){
+				upPressB = false;
+			}
+			else if (e.keyCode == 88){
+				downPressB = false;
+			}
+		}
+
+
+
+		function drawBall(){
+			ctx.beginPath();
+			ctx.arc(ballX,ballY,ballRadius,0,Math.PI*2);
+			ctx.fillStyle = "#8CEA00";
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function drawPaddleA(){
+			ctx.beginPath();
+			ctx.rect(paddleAX,paddleAY,paddleWidth,paddleHeight);
+			ctx.fillStyle = "#0095DD"
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function drawPaddleB(){
+			ctx.beginPath();
+			ctx.rect(paddleBX,paddleBY,paddleWidth,paddleHeight);
+			ctx.fillStyle = "#0095DD";
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function drawScroeBrick(){
+			ctx.beginPath();
+			ctx.rect(0,(canvas.height-scroeBrickHeight)/2,scoreBrickWidth,scroeBrickHeight);
+			ctx.rect(canvas.width-scoreBrickWidth,(canvas.height-scroeBrickHeight)/2,scoreBrickWidth,scroeBrickHeight);
+			ctx.fillStyle = "#FF5151";
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function collision(){
+			if(ballX+dx <= paddleAX+10 ){
+				if(ballY+dy < paddleAY+paddleHeight && ballY+dy > paddleAY){
+					dx = -dx;
+					if(collisionNum != 1 ){
+						speed();
+					}
+					collisionNum = 1;
+				}
+				else if(ballX+dx < ballRadius ){
+				if(ballY+dy > (scroeBrickHeight/2) && ballY+dy < 300){
+					score2++;
+					score();
+					ballX = canvas.width/2;
+					ballY = canvas.height/2;
+					dx = 2;
+				}
+				else {
+					dx = -dx;
+					collisionNum = 0;
+				}
+			}
+
+			}
+			
+			else if (ballX+dx > paddleBX){
+				if(ballY+dy < paddleBY+paddleHeight && ballY+dy > paddleBY){
+					dx = -dx;
+					if(collisionNum != 2 ){
+						speed();
+					}
+					collisionNum = 2;	
+				}
+				else if(ballX+dx > canvas.width - scoreBrickWidth){
+				if(ballY+dy > (scroeBrickHeight/2) && ballY+dy < 300){
+					score1++;
+					score();
+					ballX = canvas.width/2;
+					ballY = canvas.height/2
+					dx = -2;
+				}
+				else {
+					dx = -dx;
+					collisionNum = 0;
+				}
+			}
+			
+			}
+
+			if(ballY + dy < ballRadius || ballY+dy > canvas.height- ballRadius){
+				dy = -dy;
+			}
+				ballX += dx;
+				ballY += dy;
+		}
+
+		function score(){
+			document.getElementById("scoreA").innerHTML = "Player1得分：" + score1;
+			document.getElementById("scoreB").innerHTML = "Player2得分：" + score2;
+			if(score1 + score2 >= 3){
+				if(score1>score2){
+					document.getElementById("winner").innerHTML = "左方獲勝!";
+					document.getElementById("winner").style.display = "inline";
+					stop = true;
+					
+				}
+				else if (score2 > score1){
+					document.getElementById("winner").innerHTML = "右方獲勝!"
+					document.getElementById("winner").style.display = "inline";
+					stop = true;
+					
+				}
+				
+				
+			}
+		}
+
+		function speed(){
+			dx *= 1.1;
+			dx *= 1.1;
+		}
+		
+		function draw(){
+			if(stop == false){
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			drawBall();
+			drawPaddleA();
+			drawPaddleB();
+			drawScroeBrick();
+			collision();
+
+			if(upPressA == true){
+				paddleBY -= 7;
+			}
+			else if (downPressA == true){
+				paddleBY += 7
+			}
+			else if (upPressB == true){
+				paddleAY -= 7
+			}
+			else if (downPressB == true){
+				paddleAY += 7
+			}
+
+			requestAnimationFrame(draw);
+			}
+
+		}
+
+		function msg(){
+			if(isMsg == true){
+				document.getElementById("msg").style.top = "300px";
+			}
+			
+		}
+		
+		function exitMsg(){
+			document.getElementById("msg").style.top = "-400px";
+		}
+		
+
+		function load(){
+			isLoadOk = true;
+		}
+
+		function startGame(){
+			
+			if(isStartGame == false && isLoadOk == true){
+				draw();
+				score();
+				isMsg = false;
+			}
+			// else if (score1 + score2 >= 3){
+			// 	score1 = 0 ;
+			// 	score2 = 0;
+			// 	ballX = canvas.width/2;
+			// 	ballY = canvas.height/2;
+			// 	dx = -2;
+			// 	dy = 2;
+			// 	paddleAY = (canvas.height-paddleHeight)/2;
+			// 	paddleBY = (canvas.height-paddleHeight)/2;
+			// 	draw();
+			// 	score();
+			// 	isMsg = false;
+			// 	stop = false;
+			// }
+			isStartGame = true;
+		}
+
+		function stopGame(){
+			if(isStartGame == true){
+			document.location.reload();
+		}
+	}
+
+	</script>
+</body>
+</html
